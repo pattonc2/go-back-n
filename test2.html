@@ -4,14 +4,108 @@
     
 <title>Charlie's Canvas</title>
 
-<script type="text/javascript" src="externalLibrary.js"></script>
 
+<script type="text/javascript" src="externalLibrary.js"></script>
+<script type="text/javascript" src="coordinates.js"></script>
  
  <script type="text/javascript">
+ speed = 250;
+
+
+packet1 = new Packet(50,32,22,30,false,0,coordinate1,coordinate21);
  
+document.addEventListener("DOMContentLoaded", init, false);
+alive = true;
+
+function init()
+      {
+        var canvas = document.getElementById("MyCanvas");
+        canvas.addEventListener("mousedown", getPosition, false);
+      }
+	  
+function increaseSpeed(){
+ speed += 200;
+ }
  
-		 
+function firstDraw(){
+var canvas = document.getElementById('MyCanvas');
+var ctx = canvas.getContext('2d');
+		var i = 30;
+		var x = 32;
+		var y = 22;
+		var z = 30;
+		var k = 630;
+		var dx = 30;
+		ctx.fillStyle = "red";
+		ctx.fillRect(i,x,y,z);
+ }
+	  
+function getPosition(event)
+      {
+        var x = new Number();
+        var y = new Number();
+        var canvas = document.getElementById("MyCanvas");
+
+        if (event.x != undefined && event.y != undefined)
+        {
+          x = event.x;
+          y = event.y;
+        }
+        else // Firefox method to get the position
+        {
+          x = event.clientX + document.body.scrollLeft +
+              document.documentElement.scrollLeft;
+          y = event.clientY + document.body.scrollTop +
+              document.documentElement.scrollTop;
+        }
+
+        x -= canvas.offsetLeft;
+        y -= canvas.offsetTop;
+
+        alert("x: " + x + "  y: " + y);
+      }
+ 
+ function funky(){
+		
+var canvas = document.getElementById('MyCanvas');
+var ctx = canvas.getContext('2d');
+ 
+var x = 30;
+var y = 32;
+var z = 22;
+var k = 30;
+var dx = 30;
+var temp = y;
+		
+		function init(){
+		return setInterval(draw, speed);
+		}
+		
+		function draw() {
+		ctx.clearRect(x,temp,z,k);
+		ctx.fillRect(x,y,z,k);
+		ctx.fill();
+		temp = y;
+		y += dx;
+		if (y == 482){
+		dx = dx * -1;
+		}
+		else if (y == 32){
+		ctx.fillStyle = "blue";
+		ctx.fillRect(x,y,z,k);
+		ctx.fill();
+		dx = 0;
+		}
+		drawRectangles();
+		}
+		
+		init();
+	}
+	
 </script>
+
+
+
 
 <style type="text/css">
       canvas { border: 2px solid black; } 
@@ -22,19 +116,23 @@
 <body onload="draw();">
 
 <form>
-<input type="button" value="Send New" onclick=funk()>
+<input type="button" value="Send New" onclick=funky()>
 <input type="button" value="Stop Animation" onclick=funk()>
-<input type="button" value="Faster" onclick=funk()>
+<input type="button" value="Faster" onclick=increaseSpeed()>
 <input type="button" value="Slower" onclick=funk()>
 <input type="button" value="Kill Packet" onclick=funk()>
-<input type="button" value="Reset" onclick=funk()>
+<input type="button" value="Stop" onclick=funk()>
+<button onclick="int=window.clearInterval(int)">Reset</button>
 
 </form>
 
 <canvas id="MyCanvas" width="750" height="550"></canvas>
 
 <script type="text/javascript">
+firstDraw();
 drawRectangles();
+packet1.send();
+//drawActivatedRectangles();
 </script>
 
 
