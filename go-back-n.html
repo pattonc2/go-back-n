@@ -1,0 +1,189 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+<title>Charlie's Canvas</title>
+
+	<style type="text/css">
+		#updateMessage {font-family: arial;
+						position: absolute;
+						top:580px;
+						left:40px;
+						font-weight: bold;}
+						
+		#updateSpeedMessage {font-family: arial;
+							 color: blue;
+							 position: absolute;
+							 top:580px;
+							 left:460px;}
+							 
+	</style>
+<style type="text/css">
+.buttonclass {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:42px;
+	-webkit-border-radius:42px;
+	border-radius:42px;
+	border:1px solid #5c6bcc;
+	display:inline-block;
+	color:#455366;
+	font-family:Times New Roman;
+	font-size:14px;
+	font-weight:bold;
+	padding:0px 19px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+}.buttonclass:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}.buttonclass:active {
+	position:relative;
+	top:1px;
+}
+</style>
+
+
+<script type="text/javascript" src="externalLibrary.js"></script>
+<script type="text/javascript" src="coordinates.js"></script>
+<script type="text/javascript" src="window.js"></script>
+
+ <script type="text/javascript">
+ 
+var speed = speed3;
+document.addEventListener("DOMContentLoaded", init, false);
+
+function init()
+      {
+        var canvas = document.getElementById("MyCanvas");
+        canvas.addEventListener("mousedown", getPosition, false);
+      }
+	  
+function decreaseSpeed(){
+	if (speed < 450){
+		speed += 100;
+		updateSpeedMessage();}
+}
+ 
+function increaseSpeed(){
+	if (speed > 50){
+		speed -= 100;
+		updateSpeedMessage();}
+}
+
+function calibrateSpeedMessage(){
+	if (speed == 50){
+		speedMessage = "" + "Speed: " + "100%";
+		}
+	 else if (speed == 150){
+		speedMessage =  "" + "Speed: " + "75%";
+		}
+	 else if (speed == 250){
+		speedMessage =  "" + "Speed: " + "50%";
+		}
+	 else if (speed == 350){
+		speedMessage =  "" + "Speed: " + "25%";
+		}
+	 else if (speed == 450){
+		speedMessage =  "" + "Speed: " + "Slowest";
+		}
+}
+
+function getSpeed(){
+	return speed;
+	}
+	
+function pause(){
+	if (alive){
+		alive = false;}
+	else {
+		alive = true;
+		}
+		
+	var elem = document.getElementById("pausebutton");
+	if (elem.value=="Stop Animation") elem.value = "Restart";
+    else elem.value = "Stop Animation";
+}
+
+	  
+function getPosition(event)
+      {
+        var x = new Number();
+        var y = new Number();
+        var canvas = document.getElementById("MyCanvas");
+
+        if (event.x != undefined && event.y != undefined)
+        {
+          x = event.x;
+          y = event.y;
+        }
+        else // Firefox method to get the position
+        {
+          x = event.clientX + document.body.scrollLeft +
+              document.documentElement.scrollLeft;
+          y = event.clientY + document.body.scrollTop +
+              document.documentElement.scrollTop;
+        }
+
+        x -= canvas.offsetLeft;
+        y -= canvas.offsetTop;
+
+        alert("x: " + x + "  y: " + y);
+      }
+ 
+	
+	
+</script>
+
+
+
+
+
+</head>
+
+<body onload="draw();">
+
+<form>
+<input type="button" class = "buttonclass" value="Send New" onclick=createPacket()>
+<input type="button" class = "buttonclass" value="Stop Animation" id="pausebutton" onclick=pause()>
+<input type="button" class = "buttonclass" value="Faster" onclick=increaseSpeed()>
+<input type="button" class = "buttonclass" value="Slower" onclick=decreaseSpeed()>
+<input type="button" class = "buttonclass" value="Kill Packet" onclick=kill()>
+<button class = "buttonclass" onclick="int=window.clearInterval(int)">Reset</button>
+
+</form>
+
+<canvas id="MyCanvas" width="750" height="550"></canvas>
+<div id="updateMessage">message</div>
+
+<div id="updateSpeedMessage">speedMessage</div>
+
+<script>
+function updateMessageStatus(){
+document.getElementById("updateMessage").innerHTML=message;
+}
+</script>
+
+<script>
+function updateSpeedMessage(){
+calibrateSpeedMessage();
+document.getElementById("updateSpeedMessage").innerHTML=speedMessage;
+}
+</script>
+
+<script type="text/javascript">
+drawWindow(window1);
+drawRectangles();
+updateMessageStatus();
+updateSpeedMessage();
+</script>
+
+
+</body></html>

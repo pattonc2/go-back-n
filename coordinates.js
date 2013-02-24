@@ -1,10 +1,10 @@
-
 function Coordinate(x,y,j,k){
 	this.x = x;
 	this.y = y;
 	this.j = j;
 	this.k = k;
 }
+
 
 //Coordinates for top level rectangles
 coordinate1 = new Coordinate(30,32,22,30);
@@ -52,3 +52,9 @@ coordinate40 = new Coordinate(600,482,22,30);
 
 var sentRectangles = new Array();
 var receivedRectangles = new Array();
+
+var coordinatesSender = new Array(coordinate1,coordinate2,coordinate3,coordinate4,coordinate5,coordinate6,coordinate7,coordinate8,coordinate9,coordinate10,
+		coordinate11,coordinate12,coordinate13,coordinate14,coordinate15,coordinate16,coordinate17,coordinate18,coordinate19,coordinate20);
+		
+var coordinatesReceiver = new Array(coordinate21,coordinate22,coordinate23,coordinate24,coordinate25,coordinate26,coordinate27,coordinate28,coordinate29,
+		coordinate30,coordinate31,coordinate32,coordinate33,coordinate34,coordinate35,coordinate36,coordinate37,coordinate38,coordinate39,coordinate40);
